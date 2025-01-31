@@ -3,7 +3,7 @@ name: Payment-Microservice Deploy
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   # 1. Build e validação da aplicação
