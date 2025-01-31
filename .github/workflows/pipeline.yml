@@ -36,8 +36,7 @@ jobs:
           SONAR_HOST_URL: https://sonarcloud.io
         run: |
           ./mvnw sonar:sonar \
-          -Dsonar.projectKey=Lucas-lds_grupo-34-restaurante-pagamento \
-          -Dsonar.projectName=Grupo-34-restaurante-pagamento \
+          -Dsonar.projectKey=lucas-lds_grupo-34-restaurante-pagamentos \
           -Dsonar.organization=lucas-lds \
           -Dsonar.host.url=https://sonarcloud.io \
           -Dsonar.login=4fc1595f3f3711174dcac36bf06a11606b230687
