@@ -1,4 +1,4 @@
-name: Product-Microservice Deploy
+name: Payment-Microservice Deploy
 
 on:
   push:
