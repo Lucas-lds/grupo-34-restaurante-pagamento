@@ -37,6 +37,7 @@ jobs:
         run: |
           ./mvnw sonar:sonar \
           -Dsonar.projectKey=lucas-lds_grupo-34-restaurante-pagamento \
+          -Dsonar.projectName=Grupo-34-restaurante-pagamento \
           -Dsonar.organization=lucas-lds \
           -Dsonar.host.url=$SONAR_HOST_URL \
           -Dsonar.login=$SONAR_TOKEN
