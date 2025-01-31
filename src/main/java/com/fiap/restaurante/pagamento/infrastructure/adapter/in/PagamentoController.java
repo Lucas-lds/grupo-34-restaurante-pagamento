@@ -18,7 +18,6 @@ public class PagamentoController {
     @Autowired
     private PagamentoUseCasePortOut pagamentoUseCasePortOut;
 
-    //TODO testar swagger e chamadas
     @Operation(summary = "Consultar status do pagamento", description = "Consulta o status do pagamento de um pedido.")
     @GetMapping("/status/{idPedido}")
     public String consultarStatusPagamento(@PathVariable Long idPedido) {
