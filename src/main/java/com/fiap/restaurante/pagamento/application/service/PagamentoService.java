@@ -2,6 +2,7 @@ package com.fiap.restaurante.pagamento.application.service;
 
 import com.fiap.restaurante.pagamento.application.port.out.PagamentoAdapterPortOut;
 import com.fiap.restaurante.pagamento.application.port.out.PagamentoServicePortOut;
+import com.fiap.restaurante.pagamento.core.domain.Pagamento;
 import com.mercadopago.resources.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class PagamentoService implements PagamentoServicePortOut {
     private PagamentoAdapterPortOut pagamentoAdapterPortOut;
 
     @Override
-    public String consultarStatusPagamento(Long idPedido) {
+    public String consultarStatusPagamento(String idPedido) {
         return this.pagamentoAdapterPortOut.consultarStatusPagamento(idPedido);
     }
 
@@ -34,5 +35,10 @@ public class PagamentoService implements PagamentoServicePortOut {
     public Payment consultarPagamentoML(String paymentId) {
         return this.pagamentoAdapterPortOut.consultarPagamentoML(paymentId);
     }
-    
+
+    @Override
+    public void cadastrarNovoPagamento(Pagamento pagamento) {
+        pagamentoAdapterPortOut.cadastrarNovoPagamento(pagamento);
+    }
+
 }

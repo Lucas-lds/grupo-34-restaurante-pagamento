@@ -2,6 +2,8 @@ package com.fiap.restaurante.pagamento.core.usecase;
 
 import com.fiap.restaurante.pagamento.application.port.out.PagamentoServicePortOut;
 import com.fiap.restaurante.pagamento.application.port.out.usecase.PagamentoUseCasePortOut;
+import com.fiap.restaurante.pagamento.core.domain.Pagamento;
+import com.fiap.restaurante.pagamento.infrastructure.entity.PagamentoEntity;
 import com.mercadopago.resources.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,12 @@ public class PagamentoUseCase implements PagamentoUseCasePortOut {
     private PagamentoServicePortOut pagamentoServicePortOut;
 
     @Override
-    public String consultarStatusPagamento(Long idPedido) {
+    public void cadastrarNovoPagamento(Pagamento pagamento) {
+        pagamentoServicePortOut.cadastrarNovoPagamento(pagamento);
+    }
+
+    @Override
+    public String consultarStatusPagamento(String idPedido) {
         return this.pagamentoServicePortOut.consultarStatusPagamento(idPedido);
     }
 
@@ -34,5 +41,5 @@ public class PagamentoUseCase implements PagamentoUseCasePortOut {
     public Payment consultarPagamentoML(String paymentId) {
         return this.pagamentoServicePortOut.consultarPagamentoML(paymentId);
     }
-    
+
 }

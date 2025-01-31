@@ -1,6 +1,7 @@
 package com.fiap.restaurante.pagamento.infrastructure.adapter.out;
 
 import com.fiap.restaurante.pagamento.application.port.out.PagamentoAdapterPortOut;
+import com.fiap.restaurante.pagamento.core.domain.Pagamento;
 import com.fiap.restaurante.pagamento.infrastructure.repository.PagamentoRepository;
 import com.mercadopago.MercadoPago;
 import com.mercadopago.exceptions.MPConfException;
@@ -34,9 +35,9 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
     }
 
     @Override
-    public String consultarStatusPagamento(Long idPedido) {
+    public String consultarStatusPagamento(String idPedido) {
         var pagamento = pagamentoRepository.findByIdPedido(idPedido);
-        if(pagamento != null)
+        if (pagamento != null)
             return pagamento.getStatus().toString();
         else
             throw new RuntimeException("Pedido não encontrado!");
@@ -58,6 +59,11 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
     }
 
     @Override
+    public void cadastrarNovoPagamento(Pagamento pagamento) {
+        pagamentoRepository.save(pagamento.toEntity());
+    }
+
+    @Override
     public String gerarQRCodePagamento(Double valor, String descricao) {
         RestTemplate restTemplate = new RestTemplate();
 
@@ -67,34 +73,34 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
         headers.setBearerAuth(accessToken);
 
         String dataExpiracao = LocalDateTime.now()
-            .plusMinutes(10)
-            .atOffset(ZoneOffset.of("-03:00"))
-            .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"));
+                .plusMinutes(10)
+                .atOffset(ZoneOffset.of("-03:00"))
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX"));
 
         // Configura o corpo da requisição
         JSONObject body = new JSONObject();
         body.put("external_reference", "123456"); //inserir o id do pedido
-        body.put("notification_url",  ngrokURL + "/api/v1/pagamento/webhook");
+        body.put("notification_url", ngrokURL + "/api/v1/pagamento/webhook");
         body.put("expiration_date", dataExpiracao);
         body.put("title", descricao);
         body.put("description", descricao);
         body.put("total_amount", valor);
         body.put("items", new JSONObject[]{
-            new JSONObject()
-                .put("title", descricao)
-                .put("quantity", 1)
-                .put("unit_price", valor)
-                .put("unit_measure", "unit")
-                .put("total_amount", valor)
+                new JSONObject()
+                        .put("title", descricao)
+                        .put("quantity", 1)
+                        .put("unit_price", valor)
+                        .put("unit_measure", "unit")
+                        .put("total_amount", valor)
         });
 
         HttpEntity<String> request = new HttpEntity<>(body.toString(), headers);
 
         // Enviar a requisição POST
         ResponseEntity<String> response = restTemplate.postForEntity(
-            apiQRs,
-            request,
-            String.class
+                apiQRs,
+                request,
+                String.class
         );
 
         System.err.println(response.getStatusCode());
@@ -130,5 +136,5 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
 
         return new ResponseEntity<>("Notificação recebida com sucesso", HttpStatus.OK);
     }
-    
+
 }
