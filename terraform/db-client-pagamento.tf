@@ -9,8 +9,8 @@ resource "aws_instance" "db_client_pagamento" {
 
   # Copia o arquivo SQL para a instância
   provisioner "file" {
-    source      = "../docker/init-pagamento.sql"
-    destination = "/home/ec2-user/init-pagamento.sql"
+    source      = "../docker/init.sql"
+    destination = "/home/ec2-user/init.sql"
 
     connection {
       type        = "ssh"
@@ -28,7 +28,7 @@ resource "aws_instance" "db_client_pagamento" {
       "sudo rpm --import https://repo.mysql.com/RPM-GPG-KEY-mysql-2023",
       "sudo yum install -y mysql-community-client",
       "mysql -h ${aws_db_instance.mysql_rds_pagamento.address} -u ${var.mysql_user_pagamento} -p${var.mysql_password_pagamento} -e 'CREATE DATABASE IF NOT EXISTS ${var.mysql_database_pagamento};'",
-      "mysql -h ${aws_db_instance.mysql_rds_pagamento.address} -u ${var.mysql_user_pagamento} -p${var.mysql_password_pagamento} ${var.mysql_database_pagamento} < /home/ec2-user/init-pagamento.sql" # Caminho do arquivo SQL na instância
+      "mysql -h ${aws_db_instance.mysql_rds_pagamento.address} -u ${var.mysql_user_pagamento} -p${var.mysql_password_pagamento} ${var.mysql_database_pagamento} < /home/ec2-user/init.sql" # Caminho do arquivo SQL na instância
     ]
 
     connection {
