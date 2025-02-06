@@ -80,7 +80,7 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
         // Configura o corpo da requisição
         JSONObject body = new JSONObject();
         body.put("external_reference", "123456"); //inserir o id do pedido
-        body.put("notification_url", ngrokURL + "/api/v1/pagamento/webhook");
+        body.put("notification_url", ngrokURL + "/pagamento/webhook");
         body.put("expiration_date", dataExpiracao);
         body.put("title", descricao);
         body.put("description", descricao);
