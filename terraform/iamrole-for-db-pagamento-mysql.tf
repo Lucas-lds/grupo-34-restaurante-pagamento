@@ -20,7 +20,7 @@ resource "aws_iam_role" "db_pagamento_mysql_access_role" {
 resource "aws_iam_policy" "db_pagamento_mysql_access_policy" {
   name        = "iam-policy-for-db-pagamento-mysql"
   description = "IAM policy for RDS payment instance"
-  policy      = jsonencode({
+  policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
       {

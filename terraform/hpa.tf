@@ -11,8 +11,8 @@ resource "kubernetes_horizontal_pod_autoscaler" "pagamento_hpa" {
       name        = kubernetes_deployment.pagamento-api.metadata[0].name
     }
 
-    min_replicas = 1
-    max_replicas = 10
+    min_replicas                      = 1
+    max_replicas                      = 10
     target_cpu_utilization_percentage = 70
   }
 }

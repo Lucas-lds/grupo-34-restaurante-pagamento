@@ -7,7 +7,7 @@ variable "region" {
 variable "cluster_name" {
   description = "Nome do cluster EKS"
   type        = string
-  default = "restaurante-cluster2"
+  default     = "restaurante-cluster2"
 }
 
 variable "mysql_user_pagamento" {

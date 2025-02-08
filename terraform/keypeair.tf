@@ -6,7 +6,7 @@ resource "tls_private_key" "tls_private" {
 
 # Recurso para criar um par de chaves na AWS
 resource "aws_key_pair" "generated_key" {
-  key_name   = "chave-fiap-ms-pagamento"                                  # Nome da chave que será utilizada para acessar a instância EC2
+  key_name   = "chave-fiap-ms-pagamento"                      # Nome da chave que será utilizada para acessar a instância EC2
   public_key = tls_private_key.tls_private.public_key_openssh # Chave pública gerada a partir da chave privada
 }
 
