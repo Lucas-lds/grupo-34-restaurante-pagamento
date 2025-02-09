@@ -1,6 +1,6 @@
 ### DEPLOYMENT PARA O SERVIÇO DE PAGAMENTO ###
 resource "kubernetes_deployment" "pagamento-api" {
-  depends_on = [aws_eks_cluster.eks-cluster, aws_eks_node_group.eks-cluster]
+  #depends_on = [aws_eks_cluster.eks-cluster, aws_eks_node_group.eks-cluster]
 
   metadata {
     name = "pagamento"
@@ -30,7 +30,7 @@ resource "kubernetes_deployment" "pagamento-api" {
 
         container {
           name  = "pagamento"
-          image = "717279688908.dkr.ecr.us-east-1.amazonaws.com/repositorio-pagamento:v1"
+          image = "717279688908.dkr.ecr.us-east-1.amazonaws.com/repositorio-pagamento:v10"
 
           env {
             name  = "RDS_ENDPOINT"
