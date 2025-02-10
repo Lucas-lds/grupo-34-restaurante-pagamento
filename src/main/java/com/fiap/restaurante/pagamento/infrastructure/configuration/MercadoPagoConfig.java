@@ -29,7 +29,6 @@ public class MercadoPagoConfig {
 
     @Bean
     public PagamentoAdapterOut pagamentoAdapterOut() throws MPConfException {
-        // Injeção do Access Token ao criar o serviço
         return new PagamentoAdapterOut(accessToken, ngrokURL, apiQRs, pagamentoRepository,restTemplate);
     }
 }
