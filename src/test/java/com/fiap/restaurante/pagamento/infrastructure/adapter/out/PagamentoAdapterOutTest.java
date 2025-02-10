@@ -49,24 +49,24 @@ public class PagamentoAdapterOutTest {
 
     @Test
     void consultarStatusPagamentoDeveRetornarStatus() {
-        when(pagamentoRepository.findByIdPedido(anyString())).thenReturn(pagamento.toEntity());
+        when(pagamentoRepository.findFirstByIdPedido(anyString())).thenReturn(pagamento.toEntity());
 
         String status = pagamentoAdapterOut.consultarStatusPagamento("123456");
 
         assertNotNull(status);
         assertEquals("PENDING", status);
-        verify(pagamentoRepository, times(1)).findByIdPedido(anyString());
+        verify(pagamentoRepository, times(1)).findFirstByIdPedido(anyString());
     }
 
     @Test
     void consultarStatusPagamentoDeveLancarExcecaoQuandoPedidoNaoEncontrado() {
-        when(pagamentoRepository.findByIdPedido(anyString())).thenReturn(null);
+        when(pagamentoRepository.findFirstByIdPedido(anyString())).thenReturn(null);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () ->
                 pagamentoAdapterOut.consultarStatusPagamento("123456"));
 
         assertEquals("Pedido não encontrado!", exception.getMessage());
-        verify(pagamentoRepository, times(1)).findByIdPedido(anyString());
+        verify(pagamentoRepository, times(1)).findFirstByIdPedido(anyString());
     }
 
     @Test
