@@ -38,7 +38,7 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
 
     @Override
     public String consultarStatusPagamento(String idPedido) {
-        var pagamento = pagamentoRepository.findByIdPedido(idPedido);
+        var pagamento = pagamentoRepository.findFirstByIdPedido(idPedido);
         if (pagamento != null)
             return pagamento.getStatus().toString();
         else

@@ -24,11 +24,13 @@ public class MercadoPagoConfig {
     @Autowired
     private PagamentoRepository pagamentoRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     @Bean
     public PagamentoAdapterOut pagamentoAdapterOut() throws MPConfException {
-        return new PagamentoAdapterOut(accessToken, ngrokURL, apiQRs, pagamentoRepository,restTemplate);
+        return new PagamentoAdapterOut(accessToken, ngrokURL, apiQRs, pagamentoRepository, restTemplate());
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }
