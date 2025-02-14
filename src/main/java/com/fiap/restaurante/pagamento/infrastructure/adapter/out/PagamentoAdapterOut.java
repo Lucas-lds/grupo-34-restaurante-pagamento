@@ -24,8 +24,10 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
     private final String ngrokURL;
     private final String apiQRs;
     private final PagamentoRepository pagamentoRepository;
+    private final RestTemplate restTemplate;
 
-    public PagamentoAdapterOut(String accessToken, String ngrokURL, String apiQRs, PagamentoRepository pagamentoRepository) throws MPConfException {
+    public PagamentoAdapterOut(String accessToken, String ngrokURL, String apiQRs, PagamentoRepository pagamentoRepository, RestTemplate restTemplate) throws MPConfException {
+        this.restTemplate = restTemplate;
         MercadoPago.SDK.setAccessToken(accessToken);
 
         this.accessToken = accessToken;
@@ -36,7 +38,7 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
 
     @Override
     public String consultarStatusPagamento(String idPedido) {
-        var pagamento = pagamentoRepository.findByIdPedido(idPedido);
+        var pagamento = pagamentoRepository.findFirstByIdPedido(idPedido);
         if (pagamento != null)
             return pagamento.getStatus().toString();
         else
@@ -65,8 +67,6 @@ public class PagamentoAdapterOut implements PagamentoAdapterPortOut {
 
     @Override
     public String gerarQRCodePagamento(Double valor, String descricao) {
-        RestTemplate restTemplate = new RestTemplate();
-
         // Configura o cabeçalho da requisição
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
